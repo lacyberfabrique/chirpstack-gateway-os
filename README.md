@@ -1,119 +1,102 @@
 # ChirpStack Gateway OS
 
-ChirpStack Gateway OS is an open-source [OpenWrt](https://openwrt.org/) based
-embedded OS for LoRa<sup>&reg;</sup> gateways. It provides a web-interface for
-configuration and contains pre-defined configuration options for common
-LoRa hardware to make it easy to setup a LoRa gateway and optionally a
-ChirpStack-based LoRaWAN<sup>&reg;</sup> Network Server.
+ChirpStack Gateway OS est un système d'exploitation embarqué open-source basé sur [OpenWrt](https://openwrt.org/) pour les passerelles LoRa<sup>&reg;</sup>. Il fournit une interface web pour la configuration et contient des options de configuration prédéfinies pour le matériel LoRa courant afin de faciliter la mise en place d'une passerelle LoRa et optionnellement d'un serveur de réseau LoRaWAN<sup>&reg;</sup> basé sur ChirpStack.
 
-**Note:** If you are looking for the [Yocto](https://www.yoctoproject.org/)
-recipes of the previously Yocto based ChirpStack Gateway OS, please switch to
-the [v4_yocto](https://github.com/chirpstack/chirpstack-gateway-os/tree/v4_yocto)
-branch.
+**Note :** Si vous recherchez les recettes [Yocto](https://www.yoctoproject.org/) de l'ancienne version basée sur Yocto de ChirpStack Gateway OS, veuillez basculer vers la branche [v4_yocto](https://github.com/chirpstack/chirpstack-gateway-os/tree/v4_yocto).
 
-## Documentation and binaries
+## Documentation et binaires
 
-Please refer to the [ChirpStack Gateway OS documentation](https://www.chirpstack.io/docs/chirpstack-gateway-os/)
-for documentation and pre-compiled images.
+Veuillez vous référer à la [documentation ChirpStack Gateway OS](https://www.chirpstack.io/docs/chirpstack-gateway-os/) pour la documentation et les images pré-compilées.
 
-## Building from source
+## Compilation depuis les sources
 
-### Requirements
+### Prérequis
 
-Building ChirpStack Gateway OS requires:
+La compilation de ChirpStack Gateway OS nécessite :
 
 * [Docker](https://www.docker.com/)
 
-### Initialize
+### Initialisation
 
-To initialize the [OpenWrt](https://openwrt.org/) build environment, run the
-following command:
+Pour initialiser l'environnement de compilation [OpenWrt](https://openwrt.org/), exécutez la commande suivante :
 
 ```bash
 make init
 ```
 
-This will:
+Cela va :
 
-* Clone the OpenWrt code
-* Fetch all the OpenWrt feeds, including the [ChirpStack OpenWrt Feed](https://github.com/chirpstack/chirpstack-openwrt-feed)
-* Symlink configuration and files
+* Cloner le code OpenWrt
+* Récupérer tous les feeds OpenWrt, y compris le [ChirpStack OpenWrt Feed](https://github.com/chirpstack/chirpstack-openwrt-feed)
+* Créer des liens symboliques pour la configuration et les fichiers
 
-### Update
+### Mise à jour
 
-This step is not required after running `make init`, but allows you to update
-the OpenWrt source and feeds at a later point:
+Cette étape n'est pas requise après avoir exécuté `make init`, mais vous permet de mettre à jour les sources OpenWrt et les feeds à un moment ultérieur :
 
 ```bash
 make update
 ```
 
-### Build
+### Compilation
 
-For building the ChirpStack Gateway OS, you must enter the Docker-based
-development environment first:
+Pour compiler ChirpStack Gateway OS, vous devez d'abord entrer dans l'environnement de développement basé sur Docker :
 
 ```
 make devshell
 ```
 
-#### Switch configuration
+#### Changer de configuration
 
-Each target and image has its own OpenWrt configuration file, files and
-patches. These can be found under the `conf` directory of this repository.
+Chaque cible et image a son propre fichier de configuration OpenWrt, ses fichiers et ses correctifs. Ceux-ci peuvent être trouvés dans le répertoire `conf` de ce dépôt.
 
-To switch to one of these configuration environments, you must execute:
+Pour basculer vers l'un de ces environnements de configuration, vous devez exécuter :
 
 ```
-make switch-env ENV=name-of-env
+make switch-env ENV=nom-de-l-env
 ```
 
-Fo example if you would like to switch to `base_raspberrypi_bcm27xx_bcm2709`,
-you execute:
+Par exemple, si vous souhaitez basculer vers `base_raspberrypi_bcm27xx_bcm2709`, vous exécutez :
 
 ```
 make switch-env ENV=base_raspberrypi_bcm27xx_bcm2709
 ```
 
-This will:
+Cela va :
 
-* Undo all previously applied patches.
-* Update the symlinks for OpenWrt configuration and files.
-* Apply all patches. 
+* Annuler tous les correctifs précédemment appliqués
+* Mettre à jour les liens symboliques pour la configuration et les fichiers OpenWrt
+* Appliquer tous les correctifs
 
-#### Building image
+#### Compilation de l'image
 
-Once the configuration has been set, run the following command to build the
-ChirpStack Gateway OS image:
+Une fois que la configuration a été définie, exécutez la commande suivante pour compiler l'image ChirpStack Gateway OS :
 
 ```bash
 make
 ```
 
-Note that this can take a couple of hours depending on the selected
-configuration and will require a significant amount of disk-space.
+Notez que cela peut prendre plusieurs heures selon la configuration sélectionnée et nécessitera une quantité importante d'espace disque.
 
-#### Making configuration changes
+#### Modifications de configuration
 
-**Note:** The commands listed below must be executed within the `openwrt`
-directory.
+**Note :** Les commandes listées ci-dessous doivent être exécutées dans le répertoire `openwrt`.
 
-To make configuration changes (e.g. add additional packages), you can execute:
+Pour apporter des modifications de configuration (par exemple, ajouter des paquets supplémentaires), vous pouvez exécuter :
 
 ```bash
 make menuconfig
 ```
 
-As updates to OpenWrt packages can introduce new configuration options over
-time, you can run the following command to update the configuration:
+Comme les mises à jour des paquets OpenWrt peuvent introduire de nouvelles options de configuration au fil du temps, vous pouvez exécuter la commande suivante pour mettre à jour la configuration :
 
 ```bash
 make defconfig
 ```
 
-Please refer also to the [OpenWrt build system usage documentation](https://openwrt.org/docs/guide-developer/toolchain/use-buildsystem).
+Veuillez également vous référer à la [documentation d'utilisation du système de compilation OpenWrt](https://openwrt.org/docs/guide-developer/toolchain/use-buildsystem).
 
-## Links
+## Liens
 
-* [ChirpStack documentation](https://www.chirpstack.io/)
-* [chirpstack-openwrt-feed](https://github.com/chirpstack/chirpstack-openwrt-feed) repository
+* [Documentation ChirpStack](https://www.chirpstack.io/)
+* Dépôt [chirpstack-openwrt-feed](https://github.com/chirpstack/chirpstack-openwrt-feed)
