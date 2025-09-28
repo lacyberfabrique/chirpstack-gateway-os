@@ -1,5 +1,8 @@
 .PHONY: build clean init update devshell show-envs switch-env
 
+# Detect Docker Compose command
+DOCKER_COMPOSE := $(shell which docker-compose 2>/dev/null || echo "docker compose")
+
 # Build the OpenWrt image.
 # Note: execute this within the devshell.
 build:
@@ -12,9 +15,9 @@ init:
 	cp feeds.conf.default openwrt/feeds.conf.default
 	ln -s ../conf/.config openwrt/.config
 	ln -s ../conf/files openwrt/files
-	docker compose run --rm chirpstack-gateway-os openwrt/scripts/feeds update -a
-	docker compose run --rm chirpstack-gateway-os openwrt/scripts/feeds install -a
-	docker compose run --rm chirpstack-gateway-os quilt init
+	$(DOCKER_COMPOSE) run --rm chirpstack-gateway-os openwrt/scripts/feeds update -a
+	$(DOCKER_COMPOSE) run --rm chirpstack-gateway-os openwrt/scripts/feeds install -a
+	$(DOCKER_COMPOSE) run --rm chirpstack-gateway-os quilt init
 
 # Update OpenWrt + package feeds.
 update:
@@ -26,7 +29,7 @@ update:
 
 # Activate the devshell.
 devshell:
-	docker compose run --rm chirpstack-gateway-os bash
+	$(DOCKER_COMPOSE) run --rm chirpstack-gateway-os bash
 
 # Switch configuration environment.,
 # Note: execute this within the devshell.
