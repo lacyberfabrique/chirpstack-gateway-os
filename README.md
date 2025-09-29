@@ -56,10 +56,10 @@ Pour basculer vers l'un de ces environnements de configuration, vous devez exéc
 make switch-env ENV=nom-de-l-env
 ```
 
-Par exemple, si vous souhaitez basculer vers `base_raspberrypi_bcm27xx_bcm2709`, vous exécutez :
+Par exemple, si vous souhaitez basculer vers `lacyber_raspberrypi_bcm27xx_bcm2709`, vous exécutez :
 
 ```
-make switch-env ENV=base_raspberrypi_bcm27xx_bcm2709
+make switch-env ENV=lacyber_raspberrypi_bcm27xx_bcm2709
 ```
 
 Cela va :
